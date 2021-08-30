@@ -12,121 +12,144 @@
   </head>
   <body>
     <header id="header">
-      <input type="checkbox" id="nav-toggle" class="nav-toggle" />
+      <input type="checkbox" id="nav-toggle" class="nav-toggle" checked="false" />
       <label for="nav-toggle" id="nav-toggle-label">
-        <i class="fas fa-bars icon"></i>
+        <i class="fas fa-times icon"></i>
       </label>
     </header>
 
-    <nav id="side-nav-bar" class="">
-      <div id="main-categories">
-        <div id="inbox-cat" class="category current">
-          <div class="category-label">
-            <i class="fas fa-inbox icon"></i>
-            <span>Inbox</span>
+    <div id="content-container">
+      <nav id="side-nav-bar" class="active">
+        <div id="main-categories">
+          <div class="category current" data-category="inbox">
+            <div class="category-label">
+              <i class="fas fa-inbox icon"></i>
+              <span>Inbox</span>
+            </div>
+            <div class="count-indicator">6</div>
           </div>
-          <div class="count-indicator">6</div>
+
+          <div class="category" data-category="today">
+            <div class="category-label">
+              <i class="fas fa-star icon"></i>
+              <span>Today</span>
+            </div>
+            <div class="count-indicator">0</div>
+          </div>
+
+          <div class="category" data-category="upcoming">
+            <div class="category-label">
+              <i class="fas fa-calendar-alt icon"></i>
+              <span>Upcoming</span>
+            </div>
+          </div>
+
+          <div class="category" data-category="anytime">
+            <div class="category-label">
+              <i class="fas fa-layer-group icon"></i>
+              <span>Anytime</span>
+            </div>
+          </div>
+
+          <div class="category" data-category="completed">
+            <div class="category-label">
+              <i class="fas fa-clipboard-check icon"></i>
+              <span>Completed</span>
+            </div>
+          </div>
         </div>
 
-        <div id="today-cat" class="category">
-          <div class="category-label">
-            <i class="fas fa-star icon"></i>
-            <span>Today</span>
+        <div id="custom-categories">
+          <div id="custom-category-list">
+            <div class="category">
+              <div class="category-label">
+                <i class="fas fa-list icon"></i>
+                <span>Custom Category 1</span>
+              </div>
+              <div class="delete">
+                <i class="far fa-trash-alt icon"></i>
+              </div>
+            </div>
+            <div class="category">
+              <div class="category-label">
+                <i class="fas fa-list icon"></i>
+                <span>Custom Category 2</span>
+              </div>
+              <div class="delete">
+                <i class="far fa-trash-alt icon"></i>
+              </div>
+            </div>
+            <div class="category">
+              <div class="category-label">
+                <i class="fas fa-list icon"></i>
+                <span>Custom Category 3</span>
+              </div>
+              <div class="delete">
+                <i class="far fa-trash-alt icon"></i>
+              </div>
+            </div>
+            <div class="category">
+              <div class="category-label">
+                <i class="fas fa-list icon"></i>
+                <span>Custom Category 4</span>
+              </div>
+              <div class="delete">
+                <i class="far fa-trash-alt icon"></i>
+              </div>
+            </div>
+            <div class="category">
+              <div class="category-label">
+                <i class="fas fa-list icon"></i>
+                <span>Custom Category 5</span>
+              </div>
+              <div class="delete">
+                <i class="far fa-trash-alt icon"></i>
+              </div>
+            </div>
           </div>
-          <div class="count-indicator">0</div>
-        </div>
 
-        <div id="upcoming-cat" class="category">
-          <div class="category-label">
-            <i class="fas fa-calendar-alt icon"></i>
-            <span>Upcoming</span>
+          <div id="new-category-btn-container">
+            <button id="new-category" class="btn">
+              <i class="fas fa-plus icon"></i>
+              <span>New Category</span>
+            </button>
           </div>
         </div>
+      </nav>
 
-        <div id="anytime-cat" class="category">
-          <div class="category-label">
-            <i class="fas fa-layer-group icon"></i>
-            <span>Anytime</span>
+      <div id="task-container">
+        <div id="task-content">
+          <div id="task-header">
+            <div class="category-label">
+              <i class="fas fa-inbox icon"></i>
+              <span>Inbox</span>
+            </div>
           </div>
-        </div>
-
-        <div id="completed-cat" class="category">
-          <div class="category-label">
-            <i class="fas fa-clipboard-check icon"></i>
-            <span>Completed</span>
+          <div id="task-list">
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, nesciunt sit? Atque
+              ipsam doloribus cum quod odio adipisci, aliquam blanditiis quisquam libero, delectus,
+              dolore nulla quis natus doloremque repellendus ratione voluptate. Porro quia eius
+              asperiores. Tempore possimus cum deleniti inventore sit consectetur repellendus nulla
+              nobis nostrum, id earum architecto excepturi vero officia sapiente praesentium
+              veritatis. Autem excepturi sint id ex dolores sunt tempore veritatis quo facere, vel
+              quam aliquid laborum neque. Alias tempora est facilis ad veritatis excepturi,
+              voluptates a ex quo eius reiciendis possimus vel exercitationem sed, voluptate dicta
+              earum quos debitis dolorem quod! Accusamus nesciunt veniam quos recusandae quisquam, a
+              adipisci autem suscipit! Consequuntur inventore magnam eos perferendis aspernatur
+              assumenda modi qui repellendus quibusdam quasi aliquam quam corrupti ea tempore,
+              molestiae nobis iusto minima dolores! Corporis itaque atque quas aliquam optio dolorem
+              pariatur reprehenderit recusandae, numquam, aperiam modi nulla. Labore, vitae
+              distinctio corrupti aliquam necessitatibus accusamus sit perferendis reiciendis
+              nostrum ducimus, qui vel. Quas nam ab tenetur cupiditate voluptates! Nisi itaque magni
+              eligendi nesciunt asperiores consectetur, quo deleniti accusantium suscipit, sint
+              nostrum neque inventore optio ratione perferendis adipisci vel! Enim, cum quam.
+              Repellat autem debitis, ducimus saepe, quisquam voluptatibus esse quidem minima
+              dolorum, ut similique quia adipisci sint.
+            </p>
           </div>
         </div>
       </div>
-
-      <div id="custom-categories">
-        <div id="custom-category-list">
-          <div class="category">
-            <div class="category-label">
-              <i class="fas fa-list icon"></i>
-              <span>Custom Category Name 1</span>
-            </div>
-            <i class="far fa-trash-alt icon"></i>
-          </div>
-          <div class="category">
-            <div class="category-label">
-              <i class="fas fa-list icon"></i>
-              <span>Custom Category Name 2</span>
-            </div>
-            <i class="far fa-trash-alt icon"></i>
-          </div>
-          <div class="category">
-            <div class="category-label">
-              <i class="fas fa-list icon"></i>
-              <span>Custom Category Name 3</span>
-            </div>
-            <i class="far fa-trash-alt icon"></i>
-          </div>
-          <div class="category">
-            <div class="category-label">
-              <i class="fas fa-list icon"></i>
-              <span>Custom Category Name 4</span>
-            </div>
-            <i class="far fa-trash-alt icon"></i>
-          </div>
-          <div class="category">
-            <div class="category-label">
-              <i class="fas fa-list icon"></i>
-              <span>Custom Category Name 5</span>
-            </div>
-            <i class="far fa-trash-alt icon"></i>
-          </div>
-        </div>
-
-        <div id="new-category-btn-container">
-          <button id="new-category" class="btn">
-            <i class="fas fa-plus icon"></i>
-            <span>New Category</span>
-          </button>
-        </div>
-      </div>
-    </nav>
-
-    <div id="task-container">
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, nesciunt sit? Atque ipsam
-        doloribus cum quod odio adipisci, aliquam blanditiis quisquam libero, delectus, dolore nulla
-        quis natus doloremque repellendus ratione voluptate. Porro quia eius asperiores. Tempore
-        possimus cum deleniti inventore sit consectetur repellendus nulla nobis nostrum, id earum
-        architecto excepturi vero officia sapiente praesentium veritatis. Autem excepturi sint id ex
-        dolores sunt tempore veritatis quo facere, vel quam aliquid laborum neque. Alias tempora est
-        facilis ad veritatis excepturi, voluptates a ex quo eius reiciendis possimus vel
-        exercitationem sed, voluptate dicta earum quos debitis dolorem quod! Accusamus nesciunt
-        veniam quos recusandae quisquam, a adipisci autem suscipit! Consequuntur inventore magnam
-        eos perferendis aspernatur assumenda modi qui repellendus quibusdam quasi aliquam quam
-        corrupti ea tempore, molestiae nobis iusto minima dolores! Corporis itaque atque quas
-        aliquam optio dolorem pariatur reprehenderit recusandae, numquam, aperiam modi nulla.
-        Labore, vitae distinctio corrupti aliquam necessitatibus accusamus sit perferendis
-        reiciendis nostrum ducimus, qui vel. Quas nam ab tenetur cupiditate voluptates! Nisi itaque
-        magni eligendi nesciunt asperiores consectetur, quo deleniti accusantium suscipit, sint
-        nostrum neque inventore optio ratione perferendis adipisci vel! Enim, cum quam. Repellat
-        autem debitis, ducimus saepe, quisquam voluptatibus esse quidem minima dolorum, ut similique
-        quia adipisci sint.
-      </p>
     </div>
   </body>
 </html>
