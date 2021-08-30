@@ -1,0 +1,141 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
+
+:root {
+  --primary-clr: #dbc5ff;
+  --primary-clr-dark: #5d5fef;
+  --grey-clr-100: #f4f4f4;
+  --grey-clr-200: #e7e7e7;
+  --grey-clr-400: #bebebe;
+  --grey-clr-600: #8a8a8a;
+  --grey-clr-900: #3e3e3e;
+  --red-clr-300: #ff6969;
+  --red-clr-500: #ff4d4d;
+  --orange-clr: #f5c361;
+  --gold-clr: #ffd000;
+  --cyan-clr: #3ab09e;
+  --blue-clr: #42a4ff;
+
+  font-size: 16px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.icon {
+  display: inline-block;
+  text-align: center;
+}
+
+.btn {
+  padding: 0.5rem;
+  border: 0;
+  border-radius: 0.5rem;
+  background: var(--primary-clr);
+}
+
+body {
+  min-height: 100vh;
+  font-family: "Open Sans", sans-serif;
+}
+
+#header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  padding: 0.5rem;
+  background-color: var(--primary-clr);
+}
+
+#nav-toggle {
+  display: none;
+}
+
+#side-nav-bar {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  padding: 0.25rem;
+  opacity: 0;
+  transform: translateX(-100%);
+  transition: all 500ms ease-in-out;
+  background: #fff;
+}
+
+#side-nav-bar.active {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+#main-categories {
+  border-bottom: 1px solid var(--grey-clr-400);
+}
+
+#inbox-cat i {
+  color: var(--blue-clr);
+}
+
+#today-cat i {
+  color: var(--gold-clr);
+}
+
+#upcoming-cat i {
+  color: var(--red-clr-300);
+}
+
+#anytime-cat i {
+  color: var(--cyan-clr);
+}
+
+#completed-cat i {
+  color: var(--primary-clr-dark);
+}
+
+.category {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+}
+
+.category.current {
+  background: var(--grey-clr-200);
+  border-radius: 0.5rem;
+}
+
+.category span {
+  color: var(--grey-clr-900);
+}
+
+.category-label i {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+i.fa-list {
+  color: var(--grey-clr-600);
+}
+
+i.fa-trash-alt {
+  color: var(--red-clr-300);
+}
+
+#custom-categories {
+  display: flex;
+  flex-direction: column;
+}
+
+#custom-categories > * {
+  margin: 0.5rem 0;
+}
+
+#new-category-btn-container {
+  display: flex;
+  justify-content: center;
+}
