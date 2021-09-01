@@ -62,12 +62,38 @@
             <label for="task-name-input" class="input-label">Task Name</label>
           </div>
 
-          <div class="form-element">
-            <textarea name="task-description" id="task-description" required></textarea>
-            <label for="task-name-input" class="input-label">Task Name</label>
+          <div class="form-element textarea-element">
+            <textarea name="task-description" id="task-description" rows="3" required></textarea>
+            <label for="task-name-input" class="input-label">Task Description</label>
           </div>
 
-          <input type="submit" class="btn" />
+          <section>
+            <p>Due Date:</p>
+            <input type="datetime-local" name="due-date" id="due-date">
+          </section>
+
+          <section>
+            <p>Priority:</p>
+            <select name="priority-list" id="priority-select">
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </select>
+          </section>
+          
+          <section>
+            <p>Category:</p>
+            <select name="category-list" id="category-select">
+              <!-- Use JS to add the options -->
+            </select>
+          </section>
+
+          <div id="form-controls">
+            <button type="button" class="delete-btn btn">
+              <i class="far fa-trash-alt"></i>
+            </button>
+            <input type="submit" class="btn" value="Add Task" />
+          </div>
       </div>
     </div>
 
