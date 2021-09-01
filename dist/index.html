@@ -18,6 +18,59 @@
       </label>
     </header>
 
+    <div class="overlay-bkg">
+      <div id="add-project" class="overlay-form hidden">
+        <p class="form-title">
+          New Category
+          <span class="close-form">
+            <i class="fas fa-times icon"></i>
+          </span>
+        </p>
+        <form>
+          <div class="form-element">
+            <input
+              type="text"
+              id="category-name-input"
+              name="category-name"
+              maxlength="17"
+              autocomplete="off"
+              required
+            />
+            <label for="category-name-input" class="input-label">Category Name</label>
+          </div>
+          <input type="submit" class="btn" />
+        </form>
+      </div>
+
+      <div id="add-edit-task" class="overlay-form">
+        <p class="form-title">
+          Add Task
+          <span class="close-form">
+            <i class="fas fa-times icon"></i>
+          </span>
+        </p>
+        <form>
+          <div class="form-element">
+            <input
+              type="text"
+              id="task-name-input"
+              name="task-name"
+              maxlength="25"
+              autocomplete="off"
+              required
+            />
+            <label for="task-name-input" class="input-label">Task Name</label>
+          </div>
+
+          <div class="form-element">
+            <textarea name="task-description" id="task-description" required></textarea>
+            <label for="task-name-input" class="input-label">Task Name</label>
+          </div>
+
+          <input type="submit" class="btn" />
+      </div>
+    </div>
+
     <div id="content-container">
       <nav id="side-nav-bar" class="active">
         <div id="main-categories">
@@ -71,7 +124,7 @@
 
       <div id="task-container">
         <div id="task-content">
-          <div id="task-header">
+          <div id="task-category-header">
             <div class="category-label">
               <i class="fas fa-inbox icon"></i>
               <span>Inbox</span>
