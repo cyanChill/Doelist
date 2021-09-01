@@ -64,7 +64,8 @@
   transition: all 500 ease-in-out;
 }
 
-.btn:hover {
+.btn:hover,
+.btn:focus {
   background: var(--primary-clr-500);
 }
 
@@ -86,9 +87,10 @@
   color: var(--red-clr-500);
 }
 
+body,
 input,
 textarea,
-body {
+select {
   font-family: "Open Sans", sans-serif;
 }
 
@@ -461,21 +463,8 @@ p.form-title span {
   right: 0;
 }
 
-/* Form Element styling */
-.overlay-form > form {
-  display: flex;
-  flex-direction: column;
-  margin: 0.5rem;
-}
-
-.overlay-form > form input[type="submit"] {
-  width: max-content;
-  align-self: center;
-  padding: 0.5rem 1rem;
-  font-weight: bold;
-}
-
-input[type="text"],
+input,
+select,
 textarea {
   padding: 0.25rem 0.5rem;
   outline: none;
@@ -487,11 +476,62 @@ textarea {
   resize: none;
 }
 
+/* Form Control Button Container Styling */
+#form-controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Delete Button Styling */
+.delete-btn {
+  background: var(--red-clr-300);
+  padding: 0.5rem 0.75rem;
+}
+
+.delete-btn i {
+  color: #fff;
+}
+
+.delete-btn:hover,
+.delete-btn:focus {
+  background: var(--red-clr-500);
+}
+
+/* Form Element styling */
+.overlay-form > form {
+  display: flex;
+  flex-direction: column;
+  margin: 0.5rem;
+}
+
+.overlay-form > form input[type="submit"] {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+}
+
+.overlay-form > form section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+  margin-bottom: 1rem;
+}
+
+.overlay-form > form section *:not(p) {
+  width: 100%;
+}
+
 /* Form Elements with Unique Animations */
 .form-element {
   position: relative;
-  height: 2.5em;
+  min-height: 2.5em;
   margin-bottom: 1em;
+}
+
+.form-element.textarea-element {
+  position: relative;
+  margin-bottom: 3rem;
 }
 
 .form-element input,
@@ -540,4 +580,19 @@ textarea {
 .overlay-form > form input:valid + .input-label,
 .overlay-form > form textarea:valid + .input-label {
   color: var(--grey-clr-600);
+}
+
+@media (min-width: 750px) {
+  .overlay-form > form section {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .overlay-form > form section p {
+    width: max-content;
+  }
+
+  .overlay-form > form section *:not(p) {
+    flex: 1;
+  }
 }
