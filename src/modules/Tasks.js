@@ -1,30 +1,45 @@
 import { createIcon } from "./utility";
 
 /* Creates a task object */
-const Task = (taskName, taskDescription, priority, project, dueDate, completedDate = "") => {
-  return { taskName, taskDescription, priority, project, dueDate, completedDate };
+const Task = (
+  taskName,
+  taskDescription,
+  priority,
+  categoryLocation,
+  dueDate,
+  completedDate = ""
+) => {
+  return { taskName, taskDescription, priority, categoryLocation, dueDate, completedDate };
+};
+
+const convertToTask = (obj) => {
+  return Task(
+    obj.taskName,
+    obj.taskDescripion,
+    obj.priority,
+    obj.categoryLocation,
+    obj.dueDate,
+    obj.completedDate
+  );
 };
 
 /* Create Task Card (Uncompleted or Completed) */
-function createTaskCard(taskObj, config) {
-  const { taskName, taskDescription, priority, project, dueDate, completedDate } = taskObj;
+function createTaskCard(taskObj) {
+  const { taskName, taskDescription, priority, categoryLocation, dueDate, completedDate } = taskObj;
+  const isCompleted = categoryLocation === "Completed";
 
   const taskCard = document.createElement("div");
   taskCard.classList.add("task-card");
 
-  const taskInfo = document.createElement("div");
-  taskInfo.classList.add("task-info");
-  taskCard.appendChild(taskInfo);
-
   const taskHeader = document.createElement("div");
   taskHeader.classList.add("task-header");
-  taskInfo.appendChild(taskHeader);
+  taskCard.appendChild(taskHeader);
 
   const checkDiv = document.createElement("div");
   checkDiv.classList.add("checkbox-div");
   taskHeader.appendChild(checkDiv);
 
-  if (!config.completed) {
+  if (!isCompleted) {
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
     checkDiv.appendChild(checkbox);
@@ -35,16 +50,22 @@ function createTaskCard(taskObj, config) {
   taskTitle.textContent = taskName;
   checkDiv.appendChild(taskTitle);
 
-  if (!config.completed) {
+  if (!isCompleted) {
     const taskOptions = document.createElement("section");
     taskHeader.appendChild(taskOptions);
     taskOptions.appendChild(createIcon(`fas fa-flag icon ${priority}`));
-    taskOptions.appendChild(createIcon("far fa-edit icon"));
+
+    let editBtn = createIcon("far fa-edit icon");
+    taskOptions.appendChild(editBtn);
+
+    editBtn.addEventListener("click", () => {
+      console.log("clicked edit button & save DOM element into an object");
+    });
   }
 
   const taskShelf = document.createElement("div");
   taskShelf.classList.add("task-shelf");
-  taskInfo.appendChild(taskShelf);
+  taskCard.appendChild(taskShelf);
 
   const taskDescrip = document.createElement("div");
   taskDescrip.classList.add("task-description");
@@ -69,17 +90,17 @@ function createTaskCard(taskObj, config) {
   dueDateStat.innerHTML = `Due Date: <span class="unfocus-text">${dueDate}</span>`;
   bottomStats.appendChild(dueDateStat);
 
-  if (config.completed) {
-    const projectStat = document.createElement("p");
-    projectStat.innerHTML = `Project: <span class="unfocus-text">${project}</span>`;
-    topStats.appendChild(projectStat);
+  if (isCompleted) {
+    const categoryStat = document.createElement("p");
+    categoryStat.innerHTML = `Category: <span class="unfocus-text">${categoryLocation}</span>`;
+    topStats.appendChild(categoryStat);
 
     const completedDateStat = document.createElement("p");
     completedDateStat.innerHTML = `Completed: <span class="unfocus-text">${completedDate}</span>`;
     bottomStats.appendChild(completedDateStat);
   }
 
-  if (!config.completed) {
+  if (!isCompleted) {
     taskCard.addEventListener("click", (e) => {
       if ([...e.target.classList].includes("task-card")) {
         if (![...taskShelf.classList].includes("show")) {
@@ -99,4 +120,4 @@ function createTaskCard(taskObj, config) {
   return taskCard;
 }
 
-export { Task, createTaskCard };
+export { Task, convertToTask, createTaskCard };
