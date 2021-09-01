@@ -1,26 +1,13 @@
-import { taskListHeight } from "./modules/TasksList";
+import { TaskListDOM } from "./modules/TasksList";
 
 const taskListDiv = document.getElementById("task-list");
 
-taskListHeight();
+TaskListDOM.taskListHeight();
 
 /* Divider */
 
-import { Task, createTaskCard } from "./modules/Tasks";
+import { Task } from "./modules/Tasks";
 const dummyTask1 = Task("Test1", "This is a test", "low", "Inbox", "n/a");
-const dummyTask2 = Task(
-  "1234567890123456789012345",
-  "This is another test",
-  "medium",
-  "Inbox",
-  "8/10/2021, 11:59:59 PM"
-);
-const dummyTask3 = Task("Test3", "This is a final test", "high", "Inbox", "n/a");
-
-const dummyTaskCard1 = createTaskCard(dummyTask1, { completed: false });
-const dummyTaskCard2 = createTaskCard(dummyTask2, { completed: false });
-const dummyTaskCard3 = createTaskCard(dummyTask3, { completed: false });
-
 const dummyTask4 = Task(
   "Test4",
   "This is a test",
@@ -29,49 +16,32 @@ const dummyTask4 = Task(
   "n/a",
   "8/10/2021, 11:59:59 PM"
 );
-const dummyTask5 = Task(
-  "Test5",
-  "This is another test",
-  "medium",
-  "Completed",
-  "8/10/2021, 11:59:59 PM",
-  "8/10/2021, 11:59:59 PM"
-);
-const dummyTask6 = Task(
-  "1234567890123456789012345",
-  "This is a final test",
-  "high",
-  "Completed",
-  "n/a",
-  "8/10/2021, 11:59:59 PM"
-);
-
-const dummyTaskCard4 = createTaskCard(dummyTask4, { completed: true });
-const dummyTaskCard5 = createTaskCard(dummyTask5, { completed: true });
-const dummyTaskCard6 = createTaskCard(dummyTask6, { completed: true });
-
-taskListDiv.append(
-  dummyTaskCard1,
-  dummyTaskCard2,
-  dummyTaskCard3,
-  dummyTaskCard4,
-  dummyTaskCard5,
-  dummyTaskCard6
-);
 
 /* Task Title <= 25 characters */
 
+import { TaskList } from "./modules/TasksList";
+
+const TaskListItems = TaskList.taskList;
+
+const testAdd = document.getElementById("add-task");
+
+testAdd.addEventListener("click", () => {
+  TaskList.addTask(dummyTask1);
+  TaskList.addTask(dummyTask4);
+});
+
+/* Older stuff below */
+
 import { displayCategory, setSelected } from "./modules/Categories";
 import { closeNavOnMobile } from "./modules/NavBar";
-const TaskList = [dummyTask1, dummyTask2, dummyTask3, dummyTask4, dummyTask5, dummyTask6];
 
-displayCategory("Inbox", TaskList);
+displayCategory("Inbox", TaskListItems);
 
 const defaultCategories = document.querySelectorAll("#main-categories .category");
 
 defaultCategories.forEach((category) => {
   category.addEventListener("click", function () {
-    displayCategory(this.dataset.category, TaskList);
+    displayCategory(this.dataset.category, TaskListItems);
     setSelected(this);
     closeNavOnMobile();
   });
@@ -80,8 +50,9 @@ defaultCategories.forEach((category) => {
 import { createCategory } from "./modules/Categories";
 const customCategoryList = document.getElementById("custom-category-list");
 
+/* Limit Category Names to 17 Characters */
 customCategoryList.appendChild(createCategory("Custom Category 1"));
 customCategoryList.appendChild(createCategory("Custom Category 2"));
 customCategoryList.appendChild(createCategory("Custom Category 3"));
 customCategoryList.appendChild(createCategory("Custom Category 4"));
-customCategoryList.appendChild(createCategory("Custom Category 5"));
+customCategoryList.appendChild(createCategory("Custom Category 5555"));
