@@ -1,4 +1,4 @@
-import { taskListHeight } from "./TasksList";
+import { TaskListDOM } from "./TasksList";
 
 const navToggler = document.getElementById("nav-toggle");
 const navTogglerLabel = document.getElementById("nav-toggle-label");
@@ -22,7 +22,7 @@ function changeNavVisibility() {
 }
 
 function changeNavOnResize() {
-  taskListHeight();
+  TaskListDOM.taskListHeight();
   if (window.innerWidth > 725 && window.innerWidth < 775) {
     if (
       (window.innerWidth <= 750 && prevWidth > window.innerWidth && navToggler.checked) ||
