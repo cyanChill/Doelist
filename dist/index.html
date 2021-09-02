@@ -18,15 +18,16 @@
       </label>
     </header>
 
-    <div class="overlay-bkg">
-      <div id="add-project" class="overlay-form hidden">
+    <div class="overlay-bkg" data-outside>
+      <div id="add-category" class="overlay-form hidden">
         <p class="form-title">
           New Category
           <span class="close-form">
             <i class="fas fa-times icon"></i>
           </span>
         </p>
-        <form>
+        <span class="errorField"></span>
+        <form data-form="add-category">
           <div class="form-element">
             <input
               type="text"
@@ -42,14 +43,15 @@
         </form>
       </div>
 
-      <div id="add-edit-task" class="overlay-form">
+      <div id="add-edit-task" class="overlay-form hidden">
         <p class="form-title">
           Add Task
           <span class="close-form">
             <i class="fas fa-times icon"></i>
           </span>
         </p>
-        <form>
+        <span class="errorField"></span>
+        <form data-form="add-edit-task">
           <div class="form-element">
             <input
               type="text"
@@ -69,72 +71,38 @@
 
           <section>
             <p>Due Date:</p>
-            <input type="datetime-local" name="due-date" id="due-date">
+            <input type="datetime-local" name="due-date" id="due-date" />
           </section>
 
           <section>
             <p>Priority:</p>
-            <select name="priority-list" id="priority-select">
+            <select name="priority-list" id="priority-select" required>
               <option value="low">Low</option>
               <option value="medium">Medium</option>
               <option value="high">High</option>
             </select>
           </section>
-          
+
           <section>
             <p>Category:</p>
-            <select name="category-list" id="category-select">
+            <select name="category-list" id="category-select" required>
               <!-- Use JS to add the options -->
             </select>
           </section>
 
           <div id="form-controls">
-            <button type="button" class="delete-btn btn">
+            <button type="button" id="delete-btn" class="btn hidden">
               <i class="far fa-trash-alt"></i>
             </button>
-            <input type="submit" class="btn" value="Add Task" />
+            <input type="submit" name="submit" class="btn" value="Add Task" />
           </div>
+        </form>
       </div>
     </div>
 
     <div id="content-container">
       <nav id="side-nav-bar" class="active">
-        <div id="main-categories">
-          <div class="category selected" data-category="Inbox">
-            <div class="category-label">
-              <i class="fas fa-inbox icon"></i>
-              <span>Inbox</span>
-            </div>
-          </div>
-
-          <div class="category" data-category="Today">
-            <div class="category-label">
-              <i class="fas fa-star icon"></i>
-              <span>Today</span>
-            </div>
-          </div>
-
-          <div class="category" data-category="Upcoming">
-            <div class="category-label">
-              <i class="fas fa-calendar-alt icon"></i>
-              <span>Upcoming</span>
-            </div>
-          </div>
-
-          <div class="category" data-category="Anytime">
-            <div class="category-label">
-              <i class="fas fa-layer-group icon"></i>
-              <span>Anytime</span>
-            </div>
-          </div>
-
-          <div class="category" data-category="Completed">
-            <div class="category-label">
-              <i class="fas fa-clipboard-check icon"></i>
-              <span>Completed</span>
-            </div>
-          </div>
-        </div>
+        <div id="main-categories"></div>
 
         <div id="custom-categories">
           <div id="custom-category-list"></div>
