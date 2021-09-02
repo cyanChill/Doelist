@@ -3,12 +3,20 @@ import { createTaskCard } from "./Tasks";
 const TaskList = (function () {
   const taskList = JSON.parse(localStorage.getItem("taskList")) || [];
 
+  function getTaskListCopy() {
+    return taskList;
+  }
+
   function addTask(task) {
     taskList.push(task);
     updateLocalStorage();
 
     /* Only add task to DOM if the task belongs to the current category displayed on the DOM - can figure it out by finding the current DOM element with the "selected" class */
-    TaskListDOM.addToList(task);
+    /* Make the following a function in TaskDOM */
+    const currCategory = document.querySelector("#task-category-header .category-label span");
+    if (currCategory.textContent === task.categoryLocation) {
+      TaskListDOM.addToList(task);
+    }
   }
 
   function updateTask(origTask, newTask) {
@@ -29,11 +37,18 @@ const TaskList = (function () {
     /* Function to update page if deleted item belongs to current page category - search dom for that element and delete it from page instead of reloading contents */
   }
 
+  function dealOrphanedTasks(categoryName) {
+    const orphanedTasks = taskList.filter((task) => task.categoryLocation === categoryName);
+    orphanedTasks.forEach((task) => {
+      updateTask(task, { ...task, categoryLocation: "Index" });
+    });
+  }
+
   function updateLocalStorage() {
     localStorage.setItem("taskList", JSON.stringify(taskList));
   }
 
-  return { taskList, addTask, updateTask, removeTask };
+  return { getTaskListCopy, addTask, updateTask, removeTask, dealOrphanedTasks };
 })();
 
 const TaskListDOM = (function () {
@@ -51,11 +66,17 @@ const TaskListDOM = (function () {
     taskListDiv.appendChild(newTask);
   }
 
+  function updateList(task) {
+    console.log("updating task in DOM");
+  }
+
   function removeFromList() {
     console.log("removing item");
     /* Do it like how we did it with the library app - when we click the edit button which, it will log the current element as a global variable
     (it'll find the parent element [the task card] and save it in an object for example) */
   }
+
+  taskListHeight();
 
   return { taskListHeight, addToList };
 })();
