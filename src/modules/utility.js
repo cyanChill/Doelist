@@ -4,4 +4,12 @@ function createIcon(iconClass) {
   return icon;
 }
 
-export { createIcon };
+function createSelectOption(optName) {
+  const option = document.createElement("option");
+  option.value = optName;
+  option.textContent = optName;
+
+  return option;
+}
+
+export { createIcon, createSelectOption };
