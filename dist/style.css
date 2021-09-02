@@ -258,7 +258,7 @@ i.fa-trash-alt {
 }
 
 #task-category-header .category-label > i {
-  margin-right: clamp(0.5rem, 3vw, 1rem);
+  margin-right: clamp(0.5rem, 3vw, 1.5rem);
 }
 
 #task-list {
@@ -420,14 +420,24 @@ i.fa-trash-alt {
 .overlay-bkg {
   height: 100%;
   width: 100%;
+  display: none;
+  top: 0;
+  left: 0;
+  background: var(--transparent-shadow);
+  opacity: 0;
+  transition: opacity 250ms ease-in-out;
+  z-index: 2;
+}
+
+.overlay-bkg.enter {
   display: flex;
   justify-content: center;
   align-items: center;
   position: absolute;
-  top: 0;
-  left: 0;
-  background: var(--transparent-shadow);
-  z-index: 2;
+}
+
+.overlay-bkg.active {
+  opacity: 1;
 }
 
 /* Hidden Class */
@@ -444,6 +454,7 @@ i.fa-trash-alt {
   padding: 0.75rem 1rem;
   border-radius: 0.5rem;
   background: #fff;
+  box-shadow: 1px 1px 3px 2px var(--transparent-shadow);
 }
 
 /* Form Title Styling */
@@ -483,34 +494,34 @@ textarea {
 }
 
 /* Delete Button Styling */
-.delete-btn {
+#delete-btn {
   background: var(--red-clr-300);
   padding: 0.5rem 0.75rem;
 }
 
-.delete-btn i {
+#delete-btn i {
   color: #fff;
 }
 
-.delete-btn:hover,
-.delete-btn:focus {
+#delete-btn:hover,
+#delete-btn:focus {
   background: var(--red-clr-500);
 }
 
 /* Form Element styling */
-.overlay-form > form {
+form[data-form] {
   display: flex;
   flex-direction: column;
   margin: 0.5rem;
 }
 
-.overlay-form > form input[type="submit"] {
+form[data-form] input[type="submit"] {
   width: 100%;
   padding: 0.5rem 1rem;
   font-weight: bold;
 }
 
-.overlay-form > form section {
+form[data-form] section {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -518,8 +529,14 @@ textarea {
   margin-bottom: 1rem;
 }
 
-.overlay-form > form section *:not(p) {
+form[data-form] section *:not(p) {
   width: 100%;
+}
+
+.errorField {
+  font-size: 0.9rem;
+  font-style: italic;
+  color: var(--red-clr-500);
 }
 
 /* Form Elements with Unique Animations */
@@ -554,10 +571,10 @@ textarea {
 }
 
 /* When we click in the input field or leave it with some valid content */
-.overlay-form > form input:focus + .input-label,
-.overlay-form > form input:valid + .input-label,
-.overlay-form > form textarea:focus + .input-label,
-.overlay-form > form textarea:valid + .input-label {
+form[data-form] input:focus + .input-label,
+form[data-form] input:valid + .input-label,
+form[data-form] textarea:focus + .input-label,
+form[data-form] textarea:valid + .input-label {
   transform: translateY(-50%);
   font-size: 0.8rem;
   left: 1em;
@@ -566,33 +583,33 @@ textarea {
 }
 
 /* When we click in the input field */
-.overlay-form > form input:focus + .input-label,
-.overlay-form > form textarea:focus + .input-label {
+form[data-form] input:focus + .input-label,
+form[data-form] textarea:focus + .input-label {
   color: var(--primary-clr-500);
 }
 
-.overlay-form > form input:focus,
-.overlay-form > form textarea:focus {
+form[data-form] input:focus,
+form[data-form] textarea:focus {
   border: 1px solid var(--primary-clr-500);
 }
 
 /* When we leave the input field with valid content */
-.overlay-form > form input:valid + .input-label,
-.overlay-form > form textarea:valid + .input-label {
+form[data-form] input:valid + .input-label,
+form[data-form] textarea:valid + .input-label {
   color: var(--grey-clr-600);
 }
 
 @media (min-width: 750px) {
-  .overlay-form > form section {
+  form[data-form] section {
     flex-direction: row;
     align-items: center;
   }
 
-  .overlay-form > form section p {
+  form[data-form] section p {
     width: max-content;
   }
 
-  .overlay-form > form section *:not(p) {
+  form[data-form] section *:not(p) {
     flex: 1;
   }
 }
