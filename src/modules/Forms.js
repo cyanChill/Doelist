@@ -14,6 +14,9 @@ const Forms = (function () {
   const exitFormButtons = document.querySelectorAll(".overlay-form span.close-form");
   const newCategoryBtn = document.getElementById("new-category");
   const newTaskBtn = document.getElementById("add-task");
+  const addUpdateTaskBtn = taskFormElement.querySelector('input[type="submit"]');
+
+  let updTaskComponents = "";
 
   exitFormButtons.forEach((btn) => {
     btn.addEventListener("click", hideForms);
@@ -50,6 +53,19 @@ const Forms = (function () {
     document.addEventListener("click", exitForm);
   }
 
+  function displayUpdateForm(task, taskCard) {
+    updTaskComponents = { task, taskCard };
+    /* Populate form fields */
+    taskFormElement["task-name"].value = task.taskName;
+    taskFormElement["task-description"].value = task.taskDescription;
+    taskFormElement["due-date"].value = task.dueDate;
+    taskFormElement["priority-select"].value = task.priority;
+    taskFormElement["category-select"].value = task.categoryLocaiton;
+
+    addUpdateTaskBtn.value = "Update Task";
+    displayForm("add-editForm");
+  }
+
   function formScreenEnter() {
     overlayBKG.classList.add("enter");
     setTimeout(
@@ -67,6 +83,8 @@ const Forms = (function () {
 
     taskFormDiv.classList.add("hidden");
     taskFormElement.reset();
+    addUpdateTaskBtn.value = "Add Task";
+    updTaskComponents = "";
     clearFormError();
   }
 
@@ -97,12 +115,16 @@ const Forms = (function () {
         e.target["category-select"].value,
         e.target["due-date"].value
       );
-      TaskList.addTask(newTask);
+      if (updTaskComponents) {
+        TaskList.updateTask(updTaskComponents.task, newTask, updTaskComponents.taskCard);
+      } else {
+        TaskList.addTask(newTask);
+      }
     }
     hideForms();
   }
 
-  return {};
+  return { displayUpdateForm };
 })();
 
 export { Forms };

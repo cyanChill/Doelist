@@ -1,4 +1,5 @@
 import { createTaskCard } from "./Tasks";
+import { getDisplayedCategory } from "./utility";
 
 const TaskList = (function () {
   const taskList = JSON.parse(localStorage.getItem("taskList")) || [];
@@ -23,13 +24,18 @@ const TaskList = (function () {
     }
   }
 
-  function updateTask(origTask, newTask) {
+  function updateTask(origTask, newTask, taskCard) {
     const taskIdx = taskList.indexOf(origTask);
     if (taskIdx === -1) return;
     taskList.splice(taskIdx, 1, newTask);
     updateLocalStorage();
 
-    /* Function to update page if updated item belongs to current page category - search dom for that element and update it from page instead of reloading contents */
+    /* If we accept a taskCard, update that card - otherwise add the current task to the "Inbox" page if we're currently on it */
+    if (taskCard) {
+      TaskListDOM.updateList(taskCard, newTask);
+    } else if (getDisplayedCategory() === "Inbox") {
+      TaskListDOM.addToList(newTask);
+    }
   }
 
   function removeTask(task) {
@@ -68,13 +74,23 @@ const TaskListDOM = (function () {
     taskListDiv.appendChild(newTask);
   }
 
-  function updateList(task) {
+  function updateList(taskCard, task) {
     console.log("updating task in DOM");
+    taskCard.querySelector(".task-title").textContent = task.taskName;
+    taskCard.querySelector(".task-description").textContent = task.taskDescription;
+    taskCard.querySelector(".priority-level span").textContent = task.priority;
+    taskCard.querySelector(".fa-flag").classList = `fas fa-flag icon ${task.priority}`;
+    taskCard.querySelector(".due-date span").textContent = task.dueDate;
+
+    /* We moved this task to a different category */
+    if (getDisplayedCategory() !== task.categoryLocation) {
+      taskCard.remove();
+    }
   }
 
   taskListHeight();
 
-  return { taskListHeight, addToList };
+  return { taskListHeight, addToList, updateList };
 })();
 
 export { TaskList, TaskListDOM };

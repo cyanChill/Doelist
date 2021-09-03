@@ -1,3 +1,4 @@
+import { Forms } from "./Forms";
 import { TaskList } from "./TasksList";
 import { createIcon } from "./utility";
 
@@ -60,7 +61,7 @@ function createTaskCard(taskObj) {
     taskOptions.appendChild(editBtn);
 
     editBtn.addEventListener("click", () => {
-      console.log("clicked edit button & save DOM element into an object");
+      Forms.displayUpdateForm(taskObj, taskCard);
     });
 
     const deleteTaskBtn = createIcon("far fa-trash-alt icon");
@@ -92,10 +93,12 @@ function createTaskCard(taskObj) {
   taskStats.appendChild(bottomStats);
 
   const priorityStat = document.createElement("p");
+  priorityStat.classList.add("priority-level");
   priorityStat.innerHTML = `Priority: <span class="unfocus-text">${priority}</span>`;
   topStats.appendChild(priorityStat);
 
   const dueDateStat = document.createElement("p");
+  dueDateStat.classList.add("due-date");
   dueDateStat.innerHTML = `Due Date: <span class="unfocus-text">${dueDate}</span>`;
   bottomStats.appendChild(dueDateStat);
 
