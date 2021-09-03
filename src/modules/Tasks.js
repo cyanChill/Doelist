@@ -1,6 +1,6 @@
 import { Forms } from "./Forms";
 import { TaskList } from "./TasksList";
-import { createIcon, getNiceTime } from "./utility";
+import { getNiceTime } from "./utility";
 
 /* Creates a task object */
 const Task = (
@@ -14,17 +14,6 @@ const Task = (
   return { taskName, taskDescription, priority, categoryLocation, dueDate, completedDate };
 };
 
-const convertToTask = (obj) => {
-  return Task(
-    obj.taskName,
-    obj.taskDescripion,
-    obj.priority,
-    obj.categoryLocation,
-    obj.dueDate,
-    obj.completedDate
-  );
-};
-
 /* Create Task Card (Uncompleted or Completed) */
 function createTaskCard(taskObj) {
   const { taskName, taskDescription, priority, categoryLocation, dueDate, completedDate } = taskObj;
@@ -33,20 +22,63 @@ function createTaskCard(taskObj) {
   const taskCard = document.createElement("div");
   taskCard.classList.add("task-card");
 
-  const taskHeader = document.createElement("div");
-  taskHeader.classList.add("task-header");
-  taskCard.appendChild(taskHeader);
+  taskCard.innerHTML = `
+    <div class="task-header">
+      <div class="checkbox-div">
+        <input type="checkbox">
+        <p class="task-title"></p>
+      </div>
+      <section>
+        ${
+          !isCompleted
+            ? `<i class="fas fa-flag icon ${priority}"></i>
+               <i class="far fa-edit icon"></i>`
+            : ""
+        }
+        <i class="far fa-trash-alt icon"></i>
+      </section>
+    </div>
+    <div class="task-shelf">
+        <div class="task-description"></div>
+        <div class="task-stats">
+          <div>
+            <p>
+              Priority: 
+              <span class="unfocus-text">${priority}</span>
+            </p>
+            ${
+              isCompleted
+                ? `<p>
+                  Category: 
+                  <span class="unfocus-text tc-category-field"></span>
+                </p>`
+                : ""
+            }
+          </div>
+          <div>
+            <p>
+              Due Date: 
+              <span class="unfocus-text"> ${dueDate ? getNiceTime(dueDate) : "n/a"}</span>
+            </p>
+            ${
+              isCompleted
+                ? `<p>
+                  Completed: 
+                  <span class="unfocus-text"> ${getNiceTime(completedDate)}</span>
+                </p>`
+                : ""
+            }
+          </div>
+        </div>
+    </div>
+  `;
 
-  const checkDiv = document.createElement("div");
-  checkDiv.classList.add("checkbox-div");
-  taskHeader.appendChild(checkDiv);
+  taskCard.querySelector(".task-title").textContent = taskName;
+  taskCard.querySelector(".task-description").textContent = taskDescription;
 
   if (!isCompleted) {
-    const checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkDiv.appendChild(checkbox);
-
-    checkbox.addEventListener("change", function () {
+    // Complete Task Event
+    taskCard.querySelector('input[type="checkbox"]').addEventListener("change", function () {
       const currTime = new Date();
       const completedTask = {
         ...taskObj,
@@ -55,86 +87,29 @@ function createTaskCard(taskObj) {
       TaskList.updateTask(taskObj, completedTask);
       taskCard.remove();
     });
-  }
 
-  const taskTitle = document.createElement("p");
-  taskTitle.classList.add("task-title");
-  taskTitle.textContent = taskName;
-  checkDiv.appendChild(taskTitle);
-
-  const taskOptions = document.createElement("section");
-  taskHeader.appendChild(taskOptions);
-
-  if (!isCompleted) {
-    taskOptions.appendChild(createIcon(`fas fa-flag icon ${priority}`));
-
-    let editBtn = createIcon("far fa-edit icon");
-    taskOptions.appendChild(editBtn);
-
-    editBtn.addEventListener("click", () => {
+    // Edit Task Event
+    taskCard.querySelector(".fa-edit").addEventListener("click", () => {
       Forms.displayUpdateForm(taskObj, taskCard);
     });
+  } else {
+    taskCard.querySelector(".tc-category-field").textContent = categoryLocation;
   }
 
-  const deleteTaskBtn = createIcon("far fa-trash-alt icon");
-  taskOptions.appendChild(deleteTaskBtn);
-
-  deleteTaskBtn.addEventListener("click", function () {
+  // Delete Task Event
+  taskCard.querySelector(".fa-trash-alt").addEventListener("click", function () {
     taskCard.remove();
     TaskList.removeTask(taskObj);
   });
 
-  const taskShelf = document.createElement("div");
-  taskShelf.classList.add("task-shelf");
-  taskCard.appendChild(taskShelf);
-
-  const taskDescrip = document.createElement("div");
-  taskDescrip.classList.add("task-description");
-  taskDescrip.textContent = taskDescription;
-  taskShelf.appendChild(taskDescrip);
-
-  const taskStats = document.createElement("div");
-  taskStats.classList.add("task-stats");
-  taskShelf.appendChild(taskStats);
-
-  const topStats = document.createElement("div");
-  taskStats.appendChild(topStats);
-
-  const bottomStats = document.createElement("div");
-  taskStats.appendChild(bottomStats);
-
-  const priorityStat = document.createElement("p");
-  priorityStat.classList.add("priority-level");
-  priorityStat.innerHTML = `Priority: <span class="unfocus-text">${priority}</span>`;
-  topStats.appendChild(priorityStat);
-
-  const dueDateStat = document.createElement("p");
-  dueDateStat.classList.add("due-date");
-  dueDateStat.innerHTML = `Due Date: <span class="unfocus-text">${
-    dueDate ? getNiceTime(dueDate) : "n/a"
-  }</span>`;
-  bottomStats.appendChild(dueDateStat);
-
-  if (isCompleted) {
-    const categoryStat = document.createElement("p");
-    categoryStat.innerHTML = `Category: <span class="unfocus-text">${categoryLocation}</span>`;
-    topStats.appendChild(categoryStat);
-
-    const completedDateStat = document.createElement("p");
-    completedDateStat.innerHTML = `Completed: <span class="unfocus-text">${getNiceTime(
-      completedDate
-    )}</span>`;
-    bottomStats.appendChild(completedDateStat);
-  }
-
   taskCard.addEventListener("click", (e) => {
+    const taskShelf = taskCard.querySelector(".task-shelf");
     if ([...e.target.classList].includes("task-card")) {
       if (![...taskShelf.classList].includes("show")) {
         taskShelf.style.maxHeight = `${taskShelf.scrollHeight}px`;
       } else {
         taskShelf.style.maxHeight = 0;
       }
-
       taskShelf.classList.toggle("show");
     }
   });
@@ -142,4 +117,4 @@ function createTaskCard(taskObj) {
   return taskCard;
 }
 
-export { Task, convertToTask, createTaskCard };
+export { Task, createTaskCard };
