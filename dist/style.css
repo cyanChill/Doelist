@@ -178,6 +178,11 @@ i.fa-edit {
   justify-content: space-between;
   align-items: center;
   padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+.category:hover {
+  background: var(--grey-clr-100);
 }
 
 .category > *:not(.fa-trash-alt) {
@@ -186,7 +191,6 @@ i.fa-edit {
 
 .category.selected {
   background: var(--grey-clr-200);
-  border-radius: 0.5rem;
 }
 
 .category-label {
@@ -336,7 +340,8 @@ i.fa-trash-alt {
   cursor: default;
 }
 
-.task-card .fa-edit {
+.task-card .fa-edit,
+.task-card .fa-trash-alt {
   pointer-events: all;
 }
 
@@ -485,12 +490,6 @@ textarea {
 
 textarea {
   resize: none;
-}
-
-/* Form Control Button Container Styling */
-#form-controls {
-  display: flex;
-  gap: 0.5rem;
 }
 
 /* Delete Button Styling */
