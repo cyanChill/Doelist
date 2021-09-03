@@ -76,7 +76,7 @@
 
           <section>
             <p>Priority:</p>
-            <select name="priority-list" id="priority-select" required>
+            <select name="priority-select" id="priority-select" required>
               <option value="low">Low</option>
               <option value="medium">Medium</option>
               <option value="high">High</option>
@@ -85,17 +85,12 @@
 
           <section>
             <p>Category:</p>
-            <select name="category-list" id="category-select" required>
+            <select name="category-select" id="category-select" required>
               <!-- Use JS to add the options -->
             </select>
           </section>
 
-          <div id="form-controls">
-            <button type="button" id="delete-btn" class="btn hidden">
-              <i class="far fa-trash-alt"></i>
-            </button>
-            <input type="submit" name="submit" class="btn" value="Add Task" />
-          </div>
+          <input type="submit" name="submit" class="btn" value="Add Task" />
         </form>
       </div>
     </div>

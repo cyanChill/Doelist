@@ -7,9 +7,7 @@ const NavBar = (function () {
 
   let prevWidth = window.innerWidth;
 
-  navToggler.addEventListener("change", () => {
-    changeNavVisibility();
-  });
+  navToggler.addEventListener("change", changeNavVisibility);
 
   window.addEventListener("resize", changeNavOnResize);
 
