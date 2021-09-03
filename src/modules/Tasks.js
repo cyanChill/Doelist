@@ -1,6 +1,6 @@
 import { Forms } from "./Forms";
 import { TaskList } from "./TasksList";
-import { createIcon } from "./utility";
+import { createIcon, getNiceTime } from "./utility";
 
 /* Creates a task object */
 const Task = (
@@ -28,7 +28,7 @@ const convertToTask = (obj) => {
 /* Create Task Card (Uncompleted or Completed) */
 function createTaskCard(taskObj) {
   const { taskName, taskDescription, priority, categoryLocation, dueDate, completedDate } = taskObj;
-  const isCompleted = categoryLocation === "Completed";
+  const isCompleted = !!completedDate;
 
   const taskCard = document.createElement("div");
   taskCard.classList.add("task-card");
@@ -45,6 +45,16 @@ function createTaskCard(taskObj) {
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
     checkDiv.appendChild(checkbox);
+
+    checkbox.addEventListener("change", function () {
+      const currTime = new Date();
+      const completedTask = {
+        ...taskObj,
+        completedDate: currTime,
+      };
+      TaskList.updateTask(taskObj, completedTask);
+      taskCard.remove();
+    });
   }
 
   const taskTitle = document.createElement("p");
@@ -52,9 +62,10 @@ function createTaskCard(taskObj) {
   taskTitle.textContent = taskName;
   checkDiv.appendChild(taskTitle);
 
+  const taskOptions = document.createElement("section");
+  taskHeader.appendChild(taskOptions);
+
   if (!isCompleted) {
-    const taskOptions = document.createElement("section");
-    taskHeader.appendChild(taskOptions);
     taskOptions.appendChild(createIcon(`fas fa-flag icon ${priority}`));
 
     let editBtn = createIcon("far fa-edit icon");
@@ -63,15 +74,15 @@ function createTaskCard(taskObj) {
     editBtn.addEventListener("click", () => {
       Forms.displayUpdateForm(taskObj, taskCard);
     });
-
-    const deleteTaskBtn = createIcon("far fa-trash-alt icon");
-    taskOptions.appendChild(deleteTaskBtn);
-
-    deleteTaskBtn.addEventListener("click", function () {
-      taskCard.remove();
-      TaskList.removeTask(taskObj);
-    });
   }
+
+  const deleteTaskBtn = createIcon("far fa-trash-alt icon");
+  taskOptions.appendChild(deleteTaskBtn);
+
+  deleteTaskBtn.addEventListener("click", function () {
+    taskCard.remove();
+    TaskList.removeTask(taskObj);
+  });
 
   const taskShelf = document.createElement("div");
   taskShelf.classList.add("task-shelf");
@@ -99,7 +110,9 @@ function createTaskCard(taskObj) {
 
   const dueDateStat = document.createElement("p");
   dueDateStat.classList.add("due-date");
-  dueDateStat.innerHTML = `Due Date: <span class="unfocus-text">${dueDate}</span>`;
+  dueDateStat.innerHTML = `Due Date: <span class="unfocus-text">${
+    dueDate ? getNiceTime(dueDate) : "n/a"
+  }</span>`;
   bottomStats.appendChild(dueDateStat);
 
   if (isCompleted) {
@@ -108,26 +121,23 @@ function createTaskCard(taskObj) {
     topStats.appendChild(categoryStat);
 
     const completedDateStat = document.createElement("p");
-    completedDateStat.innerHTML = `Completed: <span class="unfocus-text">${completedDate}</span>`;
+    completedDateStat.innerHTML = `Completed: <span class="unfocus-text">${getNiceTime(
+      completedDate
+    )}</span>`;
     bottomStats.appendChild(completedDateStat);
   }
 
-  if (!isCompleted) {
-    taskCard.addEventListener("click", (e) => {
-      if ([...e.target.classList].includes("task-card")) {
-        if (![...taskShelf.classList].includes("show")) {
-          taskShelf.style.maxHeight = `${taskShelf.scrollHeight}px`;
-        } else {
-          taskShelf.style.maxHeight = 0;
-        }
-
-        taskShelf.classList.toggle("show");
+  taskCard.addEventListener("click", (e) => {
+    if ([...e.target.classList].includes("task-card")) {
+      if (![...taskShelf.classList].includes("show")) {
+        taskShelf.style.maxHeight = `${taskShelf.scrollHeight}px`;
+      } else {
+        taskShelf.style.maxHeight = 0;
       }
-    });
-  } else {
-    taskCard.classList.add("completed");
-    taskShelf.classList.add("completed");
-  }
+
+      taskShelf.classList.toggle("show");
+    }
+  });
 
   return taskCard;
 }
