@@ -1,4 +1,4 @@
-import { createIcon, createSelectOption } from "./utility";
+import { createIcon, createSelectOption, getDisplayedCategory } from "./utility";
 import { createTaskCard } from "./Tasks";
 import { NavBar } from "./NavBar";
 import { Forms } from "./Forms";
@@ -58,15 +58,18 @@ const CategoryDOM = (function () {
   /* DOM stuff for the categories */
   function addCategoryToDOM(categoryName) {
     const newCategory = createCategory(categoryName);
-    const newOption = createSelectOption(categoryName);
 
     if (DefaultCategories.includes(categoryName)) {
       mainCategoryList.appendChild(newCategory);
     } else {
       customCategoryList.appendChild(newCategory);
     }
-    /* Add element to option of category select list from form */
-    categorySelectOptions.appendChild(newOption);
+
+    /* Add element to option of category select list from form (disallow all default categories except for "Inbox") */
+    if (!DefaultCategories.includes(categoryName) || categoryName === "Inbox") {
+      const newOption = createSelectOption(categoryName);
+      categorySelectOptions.appendChild(newOption);
+    }
   }
 
   function createCategory(categoryName) {
@@ -84,7 +87,7 @@ const CategoryDOM = (function () {
         Categories.deleteCategory(categoryName);
 
         /* If we delete a category for a page we're currently on */
-        const currentPage = taskCategoryHeader.querySelector("span").textContent;
+        const currentPage = getDisplayedCategory();
         if (currentPage === categoryName) {
           displayTaskCategory("Inbox", TaskList.getTaskListCopy());
         }
@@ -130,7 +133,7 @@ const CategoryDOM = (function () {
   }
 
   function setCurrPageOption() {
-    const currPageCat = taskCategoryHeader.querySelector("span").textContent;
+    const currPageCat = getDisplayedCategory();
     const optionIdx = Categories.getCategoryListCopy().indexOf(currPageCat);
     categorySelectOptions.selectedIndex = optionIdx;
   }
