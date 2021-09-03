@@ -12,4 +12,9 @@ function createSelectOption(optName) {
   return option;
 }
 
-export { createIcon, createSelectOption };
+function getDisplayedCategory() {
+  const taskCategoryHeader = document.getElementById("task-category-header");
+  return taskCategoryHeader.querySelector("span").textContent;
+}
+
+export { createIcon, createSelectOption, getDisplayedCategory };
