@@ -129,6 +129,12 @@ const CategoryDOM = (function () {
     }
   }
 
+  function setCurrPageOption() {
+    const currPageCat = taskCategoryHeader.querySelector("span").textContent;
+    const optionIdx = Categories.getCategoryListCopy().indexOf(currPageCat);
+    categorySelectOptions.selectedIndex = optionIdx;
+  }
+
   function removeCategoryOption(categoryName) {
     const option = document.querySelector(`option[value="${categoryName}"]`);
     option.remove();
@@ -170,7 +176,7 @@ const CategoryDOM = (function () {
     Will be able to remove displayTaskCategory (currently only in index.js) 
   */
 
-  return { addCategoryToDOM, displayTaskCategory, removeCategoryOption };
+  return { addCategoryToDOM, displayTaskCategory, removeCategoryOption, setCurrPageOption };
 })();
 
 export { CategoryDOM, Categories };

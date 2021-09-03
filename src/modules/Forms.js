@@ -1,6 +1,7 @@
 import { Categories } from "./Categories";
 import { TaskList } from "./TasksList";
 import { Task } from "./Tasks";
+import { CategoryDOM } from "./Categories";
 
 const Forms = (function () {
   const overlayBKG = document.querySelector(".overlay-bkg");
@@ -42,6 +43,7 @@ const Forms = (function () {
     if (formName === "categoryForm") {
       addCategoryFormDiv.classList.remove("hidden");
     } else if (formName === "add-editForm") {
+      CategoryDOM.setCurrPageOption();
       taskFormDiv.classList.remove("hidden");
     }
     // Listen to if we click outside the form (to close "add form" screen)
