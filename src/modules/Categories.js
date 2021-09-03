@@ -1,8 +1,9 @@
-import { createIcon, createSelectOption, getDisplayedCategory } from "./utility";
+import { createIcon, createSelectOption, getDisplayedCategory, isBtwTodayAndDate } from "./utility";
 import { createTaskCard } from "./Tasks";
 import { NavBar } from "./NavBar";
 import { Forms } from "./Forms";
 import { TaskList } from "./TasksList";
+import { addDays, compareAsc, compareDesc, endOfToday } from "date-fns";
 
 const Categories = (function () {
   const categoryList = JSON.parse(localStorage.getItem("categoryList")) || [
@@ -54,6 +55,7 @@ const CategoryDOM = (function () {
   const categorySelectOptions = document.getElementById("category-select");
   const taskCategoryHeader = document.getElementById("task-category-header");
   const taskList = document.getElementById("task-list");
+  const newTaskBtn = document.getElementById("add-task");
 
   /* DOM stuff for the categories */
   function addCategoryToDOM(categoryName) {
@@ -89,7 +91,7 @@ const CategoryDOM = (function () {
         /* If we delete a category for a page we're currently on */
         const currentPage = getDisplayedCategory();
         if (currentPage === categoryName) {
-          displayTaskCategory("Inbox", TaskList.getTaskListCopy());
+          displayTaskCategory("Inbox");
         }
       });
     }
@@ -97,7 +99,7 @@ const CategoryDOM = (function () {
     categoryDiv.addEventListener("click", function (e) {
       /* Prevents displaying category that was just deleted */
       if ([...e.target.classList].includes("category")) {
-        displayTaskCategory(this.dataset.category, TaskList.getTaskListCopy());
+        displayTaskCategory(this.dataset.category);
         setSelected(this);
         NavBar.closeNavOnMobile();
       }
@@ -133,9 +135,7 @@ const CategoryDOM = (function () {
   }
 
   function setCurrPageOption() {
-    const currPageCat = getDisplayedCategory();
-    const optionIdx = Categories.getCategoryListCopy().indexOf(currPageCat);
-    categorySelectOptions.selectedIndex = optionIdx;
+    categorySelectOptions.value = getDisplayedCategory();
   }
 
   function removeCategoryOption(categoryName) {
@@ -146,16 +146,45 @@ const CategoryDOM = (function () {
   reloadCustomCategories();
 
   /* Page section for displaying tasks */
-  function displayTaskCategory(categoryName, tasksList) {
+  function displayTaskCategory(categoryName) {
+    DefaultCategories.includes(categoryName) && categoryName !== "Inbox"
+      ? newTaskBtn.classList.add("hidden")
+      : newTaskBtn.classList.remove("hidden");
+
     updateTaskHeader(categoryName);
     taskList.textContent = "";
-    const categoryTasks = tasksList.filter((task) => {
-      return task.categoryLocation === categoryName;
-    });
+
+    /* Need to revise the following code to deal with the special cases: */
+    const categoryTasks = filteredTasks(categoryName);
 
     categoryTasks.forEach((task) => {
       taskList.appendChild(createTaskCard(task));
     });
+  }
+
+  function filteredTasks(categoryName) {
+    const tasksList = TaskList.getTaskListCopy();
+    const rtnTasks = tasksList.filter((task) => {
+      switch (categoryName) {
+        case "Today":
+          return isBtwTodayAndDate(task.dueDate) && !task.completedDate;
+        case "Upcoming":
+          return isBtwTodayAndDate(task.dueDate, addDays(endOfToday(), 3)) && !task.completedDate;
+        case "Anytime":
+          return !task.dueDate && !task.completedDate;
+        case "Completed":
+          return task.completedDate;
+        default:
+          return task.categoryLocation === categoryName && !task.completedDate;
+      }
+    });
+    if (categoryName === "Completed") {
+      rtnTasks.sort((a, b) => {
+        return compareDesc(new Date(a.completedDate), new Date(b.completedDate));
+      });
+    }
+
+    return rtnTasks;
   }
 
   function updateTaskHeader(categoryName) {
