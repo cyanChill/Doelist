@@ -5,16 +5,19 @@ import { CategoryDOM } from "./Categories";
 
 const Forms = (function () {
   const overlayBKG = document.querySelector(".overlay-bkg");
+
   const addCategoryFormDiv = document.getElementById("add-category");
   const addCategoryFormElement = addCategoryFormDiv.querySelector("form");
   const categoryErrorField = addCategoryFormDiv.querySelector(".errorField");
+
   const taskFormDiv = document.getElementById("add-edit-task");
   const taskFormElement = taskFormDiv.querySelector("form");
   const taskErrorField = taskFormDiv.querySelector(".errorField");
+  const addUpdateTaskBtn = taskFormElement.querySelector('input[type="submit"]');
+
   const exitFormButtons = document.querySelectorAll(".overlay-form span.close-form");
   const newCategoryBtn = document.getElementById("new-category");
   const newTaskBtn = document.getElementById("add-task");
-  const addUpdateTaskBtn = taskFormElement.querySelector('input[type="submit"]');
 
   let updTaskComponents = "";
 
@@ -55,7 +58,7 @@ const Forms = (function () {
 
   function displayUpdateForm(task, taskCard) {
     updTaskComponents = { task, taskCard };
-    /* Populate form fields */
+    // Populate form fields
     taskFormElement["task-name"].value = task.taskName;
     taskFormElement["task-description"].value = task.taskDescription;
     taskFormElement["due-date"].value = task.dueDate;
@@ -89,9 +92,7 @@ const Forms = (function () {
   }
 
   function exitForm(e) {
-    if (e.target.dataset.hasOwnProperty("outside")) {
-      hideForms();
-    }
+    if (e.target.dataset.hasOwnProperty("outside")) hideForms();
   }
 
   function handleSubmit(e) {
@@ -101,12 +102,9 @@ const Forms = (function () {
     if (formName === "add-category") {
       const categoryInVal = e.target["category-name"].value;
 
-      if (Categories.getCategoryListCopy().includes(categoryInVal)) {
-        displayFormError("Error: Task Category Already Exists");
-        return;
-      }
-
-      Categories.addCategory(categoryInVal);
+      Categories.getCategoryListCopy().includes(categoryInVal)
+        ? displayFormError("Error: Task Category Already Exists")
+        : Categories.addCategory(categoryInVal);
     } else if (formName === "add-edit-task") {
       const newTask = Task(
         e.target["task-name"].value,
@@ -115,11 +113,11 @@ const Forms = (function () {
         e.target["category-select"].value,
         e.target["due-date"].value
       );
-      if (updTaskComponents) {
-        TaskList.updateTask(updTaskComponents.task, newTask, updTaskComponents.taskCard);
-      } else {
-        TaskList.addTask(newTask);
-      }
+
+      updTaskComponents
+        ? // If this isn't empty, means we updated a task
+          TaskList.updateTask(updTaskComponents.task, newTask, updTaskComponents.taskCard)
+        : TaskList.addTask(newTask);
     }
     hideForms();
   }

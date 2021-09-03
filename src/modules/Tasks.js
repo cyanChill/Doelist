@@ -2,7 +2,7 @@ import { Forms } from "./Forms";
 import { TaskList } from "./TasksList";
 import { getNiceTime } from "./utility";
 
-/* Creates a task object */
+// Creates a task object
 const Task = (
   taskName,
   taskDescription,
@@ -14,7 +14,7 @@ const Task = (
   return { taskName, taskDescription, priority, categoryLocation, dueDate, completedDate };
 };
 
-/* Create Task Card (Uncompleted or Completed) */
+// Create Task Card (Uncompleted or Completed)
 function createTaskCard(taskObj) {
   const { taskName, taskDescription, priority, categoryLocation, dueDate, completedDate } = taskObj;
   const isCompleted = !!completedDate;
@@ -73,16 +73,31 @@ function createTaskCard(taskObj) {
     </div>
   `;
 
-  taskCard.querySelector(".task-title").textContent = taskName;
-  taskCard.querySelector(".task-description").textContent = taskDescription;
+  // Delete Task Event
+  taskCard.querySelector(".fa-trash-alt").addEventListener("click", function () {
+    taskCard.remove();
+    TaskList.removeTask(taskObj);
+  });
+
+  // Show Shelf Event
+  taskCard.addEventListener("click", (e) => {
+    const taskShelf = taskCard.querySelector(".task-shelf");
+    if ([...e.target.classList].includes("task-card")) {
+      if (![...taskShelf.classList].includes("show")) {
+        taskShelf.style.maxHeight = `${taskShelf.scrollHeight}px`;
+      } else {
+        taskShelf.style.maxHeight = 0;
+      }
+      taskShelf.classList.toggle("show");
+    }
+  });
 
   if (!isCompleted) {
     // Complete Task Event
     taskCard.querySelector('input[type="checkbox"]').addEventListener("change", function () {
-      const currTime = new Date();
       const completedTask = {
         ...taskObj,
-        completedDate: currTime,
+        completedDate: new Date(),
       };
       TaskList.updateTask(taskObj, completedTask);
       taskCard.remove();
@@ -96,23 +111,8 @@ function createTaskCard(taskObj) {
     taskCard.querySelector(".tc-category-field").textContent = categoryLocation;
   }
 
-  // Delete Task Event
-  taskCard.querySelector(".fa-trash-alt").addEventListener("click", function () {
-    taskCard.remove();
-    TaskList.removeTask(taskObj);
-  });
-
-  taskCard.addEventListener("click", (e) => {
-    const taskShelf = taskCard.querySelector(".task-shelf");
-    if ([...e.target.classList].includes("task-card")) {
-      if (![...taskShelf.classList].includes("show")) {
-        taskShelf.style.maxHeight = `${taskShelf.scrollHeight}px`;
-      } else {
-        taskShelf.style.maxHeight = 0;
-      }
-      taskShelf.classList.toggle("show");
-    }
-  });
+  taskCard.querySelector(".task-title").textContent = taskName;
+  taskCard.querySelector(".task-description").textContent = taskDescription;
 
   return taskCard;
 }

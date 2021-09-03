@@ -1,9 +1,8 @@
 import { createIcon, createSelectOption, getDisplayedCategory, isBtwTodayAndDate } from "./utility";
 import { createTaskCard } from "./Tasks";
 import { NavBar } from "./NavBar";
-import { Forms } from "./Forms";
 import { TaskList } from "./TasksList";
-import { addDays, compareAsc, compareDesc, endOfToday } from "date-fns";
+import { addDays, compareDesc, endOfToday } from "date-fns";
 
 const Categories = (function () {
   const categoryList = JSON.parse(localStorage.getItem("categoryList")) || [
@@ -61,11 +60,9 @@ const CategoryDOM = (function () {
   function addCategoryToDOM(categoryName) {
     const newCategory = createCategory(categoryName);
 
-    if (DefaultCategories.includes(categoryName)) {
-      mainCategoryList.appendChild(newCategory);
-    } else {
-      customCategoryList.appendChild(newCategory);
-    }
+    DefaultCategories.includes(categoryName)
+      ? mainCategoryList.appendChild(newCategory)
+      : customCategoryList.appendChild(newCategory);
 
     /* Add element to option of category select list from form (disallow all default categories except for "Inbox") */
     if (!DefaultCategories.includes(categoryName) || categoryName === "Inbox") {
@@ -80,6 +77,7 @@ const CategoryDOM = (function () {
     categoryDiv.dataset.category = categoryName;
 
     categoryDiv.appendChild(createCategoryLabel(categoryName));
+
     if (!DefaultCategories.includes(categoryName)) {
       const deleteCategoryBtn = createIcon("far fa-trash-alt icon");
       categoryDiv.appendChild(deleteCategoryBtn);
@@ -88,7 +86,7 @@ const CategoryDOM = (function () {
         categoryDiv.remove();
         Categories.deleteCategory(categoryName);
 
-        /* If we delete a category for a page we're currently on */
+        // If we delete a category for a page we're currently on
         const currentPage = getDisplayedCategory();
         if (currentPage === categoryName) {
           displayTaskCategory("Inbox");
@@ -97,13 +95,14 @@ const CategoryDOM = (function () {
     }
 
     categoryDiv.addEventListener("click", function (e) {
-      /* Prevents displaying category that was just deleted */
+      // Prevents displaying category that was just deleted
       if ([...e.target.classList].includes("category")) {
         displayTaskCategory(this.dataset.category);
         setSelected(this);
         NavBar.closeNavOnMobile();
       }
     });
+
     return categoryDiv;
   }
 
@@ -127,11 +126,10 @@ const CategoryDOM = (function () {
     Categories.getCategoryListCopy().forEach((categoryName) => {
       addCategoryToDOM(categoryName);
     });
-    if (selected) {
-      setSelected(selected);
-    } else {
-      setSelected(document.querySelector('[data-category="Inbox"]'));
-    }
+
+    selected
+      ? setSelected(selected)
+      : setSelected(document.querySelector('[data-category="Inbox"]'));
   }
 
   function setCurrPageOption() {
@@ -145,7 +143,7 @@ const CategoryDOM = (function () {
 
   reloadCustomCategories();
 
-  /* Page section for displaying tasks */
+  /* Section for displaying tasks belonging to a category */
   function displayTaskCategory(categoryName) {
     DefaultCategories.includes(categoryName) && categoryName !== "Inbox"
       ? newTaskBtn.classList.add("hidden")
@@ -154,7 +152,6 @@ const CategoryDOM = (function () {
     updateTaskHeader(categoryName);
     taskList.textContent = "";
 
-    /* Need to revise the following code to deal with the special cases: */
     const categoryTasks = filteredTasks(categoryName);
 
     categoryTasks.forEach((task) => {
@@ -178,6 +175,7 @@ const CategoryDOM = (function () {
           return task.categoryLocation === categoryName && !task.completedDate;
       }
     });
+
     if (categoryName === "Completed") {
       rtnTasks.sort((a, b) => {
         return compareDesc(new Date(a.completedDate), new Date(b.completedDate));
@@ -203,10 +201,6 @@ const CategoryDOM = (function () {
       category.classList.remove("selected");
     });
   }
-
-  /* 
-    Will be able to remove displayTaskCategory (currently only in index.js) 
-  */
 
   return { addCategoryToDOM, displayTaskCategory, removeCategoryOption, setCurrPageOption };
 })();

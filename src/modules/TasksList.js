@@ -12,16 +12,8 @@ const TaskList = (function () {
     taskList.push(task);
     updateLocalStorage();
 
-    /* 
-      Only add task to DOM if the task belongs to the current category displayed on the DOM - can figure it out by finding the current DOM element with the "selected" class 
-    */
-    /* 
-      Make the following a function in TaskDOM? since we're doing querying n stuff
-    */
-    const currCategory = document.querySelector("#task-category-header .category-label span");
-    if (currCategory.textContent === task.categoryLocation) {
-      TaskListDOM.addToList(task);
-    }
+    // Add task to DOM if task belongs to category currently being displayed
+    if (getDisplayedCategory() === task.categoryLocation) TaskListDOM.addToList(task);
   }
 
   function updateTask(origTask, newTask, taskCard) {
@@ -30,10 +22,13 @@ const TaskList = (function () {
     taskList.splice(taskIdx, 1, newTask);
     updateLocalStorage();
 
-    /* If we accept a taskCard, update that card - otherwise add the current task to the "Inbox" page if we're currently on it */
+    /* 
+      If we accept a taskCard, update that card - otherwise add the current 
+      task to the "Inbox" page if we're currently on it 
+    */
     if (taskCard) {
       TaskListDOM.updateList(taskCard, newTask);
-    } else if (getDisplayedCategory() === "Inbox") {
+    } else if (getDisplayedCategory() === "Inbox" && !newTask.completedDate) {
       TaskListDOM.addToList(newTask);
     }
   }
@@ -75,17 +70,12 @@ const TaskListDOM = (function () {
   }
 
   function updateList(taskCard, task) {
-    console.log("updating task in DOM");
-    taskCard.querySelector(".task-title").textContent = task.taskName;
-    taskCard.querySelector(".task-description").textContent = task.taskDescription;
-    taskCard.querySelector(".priority-level span").textContent = task.priority;
-    taskCard.querySelector(".fa-flag").classList = `fas fa-flag icon ${task.priority}`;
-    taskCard.querySelector(".due-date span").textContent = task.dueDate;
+    const newCard = createTaskCard(task);
 
-    /* We moved this task to a different category */
-    if (getDisplayedCategory() !== task.categoryLocation) {
-      taskCard.remove();
-    }
+    // If we moved this task to a different category
+    getDisplayedCategory() !== task.categoryLocation
+      ? taskCard.remove()
+      : taskListDiv.replaceChild(newCard, taskCard);
   }
 
   taskListHeight();

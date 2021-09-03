@@ -12,11 +12,10 @@ const NavBar = (function () {
   window.addEventListener("resize", changeNavOnResize);
 
   function changeNavVisibility() {
-    if (navToggler.checked) {
-      navTogglerLabel.innerHTML = '<i class="fas fa-times icon"></i>';
-    } else {
-      navTogglerLabel.innerHTML = '<i class="fas fa-bars icon"></i>';
-    }
+    navToggler.checked
+      ? (navTogglerLabel.innerHTML = '<i class="fas fa-times icon"></i>')
+      : (navTogglerLabel.innerHTML = '<i class="fas fa-bars icon"></i>');
+
     navBar.classList.toggle("active");
   }
 
