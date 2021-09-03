@@ -1,3 +1,5 @@
+import { format, compareAsc, isToday, isBefore, startOfToday } from "date-fns";
+
 function createIcon(iconClass) {
   const icon = document.createElement("i");
   icon.classList = iconClass;
@@ -17,4 +19,16 @@ function getDisplayedCategory() {
   return taskCategoryHeader.querySelector("span").textContent;
 }
 
-export { createIcon, createSelectOption, getDisplayedCategory };
+function getNiceTime(timeStr) {
+  return format(new Date(timeStr), "Pp");
+}
+
+function isBtwTodayAndDate(inDate, dueDate) {
+  if (!inDate || isBefore(new Date(inDate), startOfToday())) return false;
+  if (!dueDate) return isToday(new Date(inDate));
+
+  /* If we get 1, it means inDate is after dueDate */
+  return compareAsc(new Date(inDate), new Date(dueDate)) === 1 ? false : true;
+}
+
+export { createIcon, createSelectOption, getDisplayedCategory, getNiceTime, isBtwTodayAndDate };
