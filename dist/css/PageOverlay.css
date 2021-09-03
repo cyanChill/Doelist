@@ -1,0 +1,215 @@
+/* 
+  CSS styling for page overlay including the forms displayed
+*/
+
+/* 
+    Backdrop CSS
+*/
+
+/* Backdrop of what will be displayed (default hidden) */
+.overlay-bkg {
+  height: 100%;
+  width: 100%;
+  display: none;
+  top: 0;
+  left: 0;
+  background: var(--transparent-shadow);
+  opacity: 0;
+  transition: opacity 250ms ease-in-out;
+  z-index: 2;
+}
+
+/* Change the backdrop layout when we're displaying */
+.overlay-bkg.enter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+}
+
+/* Used in JS to create a fade-in animation */
+.overlay-bkg.active {
+  opacity: 1;
+}
+
+/* Hidden Class */
+.hidden {
+  display: none !important;
+}
+
+/* 
+    Form Styling 
+*/
+
+/* Generic form overlay styling */
+.overlay-form {
+  width: clamp(15rem, 50vw, 30rem);
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  background: #fff;
+  box-shadow: 1px 1px 3px 2px var(--transparent-shadow);
+}
+
+/* Form Title Styling */
+p.form-title {
+  position: relative;
+  font-size: 1.15rem;
+  font-weight: bold;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid var(--grey-clr-200);
+  color: var(--grey-clr-900);
+}
+
+/* Styling for the "close" button in the div containing the form title */
+p.form-title span {
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+}
+
+/* Generic form element styling */
+input,
+select,
+textarea {
+  padding: 0.25rem 0.5rem;
+  outline: none;
+  border: 1px solid var(--grey-clr-600);
+  border-radius: 0.5rem;
+}
+
+textarea {
+  resize: none;
+}
+
+/* Error Field Styling */
+.errorField {
+  font-size: 0.9rem;
+  font-style: italic;
+  color: var(--red-clr-500);
+}
+
+/* Delete Button Styling */
+#delete-btn {
+  background: var(--red-clr-300);
+  padding: 0.5rem 0.75rem;
+}
+
+#delete-btn i {
+  color: #fff;
+}
+
+#delete-btn:hover,
+#delete-btn:focus {
+  background: var(--red-clr-500);
+}
+
+/* Form Element styling */
+form[data-form] {
+  display: flex;
+  flex-direction: column;
+  margin: 0.5rem;
+}
+
+/* Form submit button styling */
+form[data-form] input[type="submit"] {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+}
+
+/* Styling for the elements that don't have the custom input animation */
+form[data-form] section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+  margin-bottom: 1rem;
+}
+
+/* Styling for the input element in the section containing a label (in a p tag) and an input field */
+form[data-form] section *:not(p) {
+  width: 100%;
+}
+
+/* Form Elements with Unique Animations */
+/* The container to prepare for the unique animation */
+.form-element {
+  position: relative;
+  min-height: 2.5em;
+  margin-bottom: 1em;
+}
+
+.form-element.textarea-element {
+  position: relative;
+  margin-bottom: 3rem;
+}
+
+/* Restyling the input fields & labels to be usable with the animation */
+.form-element input,
+.form-element textarea {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding-top: 1em;
+}
+
+.form-element .input-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  padding: 0.5em;
+  transition: all 250ms ease-in;
+  color: var(--grey-clr-600);
+}
+
+/* When we click in the input field or leave it with some valid content */
+form[data-form] input:focus + .input-label,
+form[data-form] input:valid + .input-label,
+form[data-form] textarea:focus + .input-label,
+form[data-form] textarea:valid + .input-label {
+  transform: translateY(-50%);
+  font-size: 0.8rem;
+  left: 1em;
+  padding: 0 0.5em;
+  background: #fff;
+}
+
+/* When we click in the input field */
+form[data-form] input:focus + .input-label,
+form[data-form] textarea:focus + .input-label {
+  color: var(--primary-clr-500);
+}
+
+form[data-form] input:focus,
+form[data-form] textarea:focus {
+  border: 1px solid var(--primary-clr-500);
+}
+
+/* When we leave the input field with valid content */
+form[data-form] input:valid + .input-label,
+form[data-form] textarea:valid + .input-label {
+  color: var(--grey-clr-600);
+}
+
+/* Dynamic styling */
+@media (min-width: 750px) {
+  /* Layout non-unique animation fields in row form instead of column */
+  form[data-form] section {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  form[data-form] section p {
+    width: max-content;
+  }
+
+  form[data-form] section *:not(p) {
+    flex: 1;
+  }
+}
