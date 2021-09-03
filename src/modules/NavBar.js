@@ -1,13 +1,19 @@
+import { Forms } from "./Forms";
 import { TaskListDOM } from "./TasksList";
 
 const NavBar = (function () {
   const navToggler = document.getElementById("nav-toggle");
   const navTogglerLabel = document.getElementById("nav-toggle-label");
   const navBar = document.getElementById("side-nav-bar");
+  const helpBtn = document.getElementById("help");
 
   let prevWidth = window.innerWidth;
 
   navToggler.addEventListener("change", changeNavVisibility);
+
+  helpBtn.addEventListener("click", function () {
+    Forms.displayForm("help-screen");
+  });
 
   window.addEventListener("resize", changeNavOnResize);
 

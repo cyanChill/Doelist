@@ -7,6 +7,11 @@
   display: none;
 }
 
+/* Help Button Styling */
+#help {
+  cursor: pointer;
+}
+
 /* This is what will be displayed to the user to "click" to active the navbar */
 #nav-toggle-label {
   cursor: pointer;
@@ -14,7 +19,7 @@
 }
 
 /* Used to help align the icon for toggle the navbar to the category icons in the navbar */
-#nav-toggle-label i {
+#header i {
   width: 1.375rem;
   height: 1.375rem;
 }

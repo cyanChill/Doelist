@@ -56,7 +56,7 @@
 /* Form Title Styling */
 p.form-title {
   position: relative;
-  font-size: 1.15rem;
+  font-size: 1.25rem;
   font-weight: bold;
   padding-bottom: 0.5rem;
   margin-bottom: 0.5rem;
@@ -212,4 +212,27 @@ form[data-form] textarea:valid + .input-label {
   form[data-form] section *:not(p) {
     flex: 1;
   }
+}
+
+/* Styling for help screen */
+#help-screen section {
+  margin-bottom: 1rem;
+}
+
+#help-screen section p.section-title {
+  font-size: clamp(0.9rem, 3vw, 1rem);
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+#help-screen ul,
+#help-screen .section-description {
+  font-size: clamp(0.8rem, 2vw, 0.9rem);
+  text-align: left;
+  list-style: none;
+}
+
+#help-screen li::before {
+  content: "-";
+  margin-right: 0.25rem;
 }

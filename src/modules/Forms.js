@@ -15,6 +15,8 @@ const Forms = (function () {
   const taskErrorField = taskFormDiv.querySelector(".errorField");
   const addUpdateTaskBtn = taskFormElement.querySelector('input[type="submit"]');
 
+  const helpScreen = document.getElementById("help-screen");
+
   const exitFormButtons = document.querySelectorAll(".overlay-form span.close-form");
   const newCategoryBtn = document.getElementById("new-category");
   const newTaskBtn = document.getElementById("add-task");
@@ -51,6 +53,8 @@ const Forms = (function () {
     } else if (formName === "add-editForm") {
       CategoryDOM.setCurrPageOption(task);
       taskFormDiv.classList.remove("hidden");
+    } else if (formName === "help-screen") {
+      helpScreen.classList.remove("hidden");
     }
     // Listen to if we click outside the form (to close "add form" screen)
     document.addEventListener("click", exitForm);
@@ -80,6 +84,8 @@ const Forms = (function () {
   function hideForms() {
     document.removeEventListener("click", exitForm);
     overlayBKG.classList = "overlay-bkg";
+
+    helpScreen.classList.add("hidden");
 
     addCategoryFormDiv.classList.add("hidden");
     addCategoryFormElement.reset();
@@ -122,7 +128,7 @@ const Forms = (function () {
     hideForms();
   }
 
-  return { displayUpdateForm };
+  return { displayForm, displayUpdateForm };
 })();
 
 export { Forms };
