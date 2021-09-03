@@ -1,3 +1,4 @@
+import { TaskList } from "./TasksList";
 import { createIcon } from "./utility";
 
 /* Creates a task object */
@@ -60,6 +61,14 @@ function createTaskCard(taskObj) {
 
     editBtn.addEventListener("click", () => {
       console.log("clicked edit button & save DOM element into an object");
+    });
+
+    const deleteTaskBtn = createIcon("far fa-trash-alt icon");
+    taskOptions.appendChild(deleteTaskBtn);
+
+    deleteTaskBtn.addEventListener("click", function () {
+      taskCard.remove();
+      TaskList.removeTask(taskObj);
     });
   }
 
