@@ -132,8 +132,11 @@ const CategoryDOM = (function () {
       : setSelected(document.querySelector('[data-category="Inbox"]'));
   }
 
-  function setCurrPageOption() {
-    categorySelectOptions.value = getDisplayedCategory();
+  function setCurrPageOption(task) {
+    const currCat = getDisplayedCategory();
+    !DefaultCategories.includes(currCat) || currCat === "Inbox"
+      ? (categorySelectOptions.value = currCat)
+      : (categorySelectOptions.value = task.categoryLocation);
   }
 
   function removeCategoryOption(categoryName) {

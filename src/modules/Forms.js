@@ -44,12 +44,12 @@ const Forms = (function () {
     taskErrorField.textContent = "";
   }
 
-  function displayForm(formName) {
+  function displayForm(formName, task = "") {
     formScreenEnter();
     if (formName === "categoryForm") {
       addCategoryFormDiv.classList.remove("hidden");
     } else if (formName === "add-editForm") {
-      CategoryDOM.setCurrPageOption();
+      CategoryDOM.setCurrPageOption(task);
       taskFormDiv.classList.remove("hidden");
     }
     // Listen to if we click outside the form (to close "add form" screen)
@@ -66,7 +66,7 @@ const Forms = (function () {
     taskFormElement["category-select"].value = task.categoryLocaiton;
 
     addUpdateTaskBtn.value = "Update Task";
-    displayForm("add-editForm");
+    displayForm("add-editForm", task);
   }
 
   function formScreenEnter() {
