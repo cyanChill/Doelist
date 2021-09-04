@@ -108,9 +108,11 @@ const Forms = (function () {
     if (formName === "add-category") {
       const categoryInVal = e.target["category-name"].value;
 
-      Categories.getCategoryListCopy().includes(categoryInVal)
-        ? displayFormError("Error: Task Category Already Exists")
-        : Categories.addCategory(categoryInVal);
+      if (Categories.getCategoryListCopy().includes(categoryInVal)) {
+        return displayFormError("Error: Task Category Already Exists");
+      } else {
+        Categories.addCategory(categoryInVal);
+      }
     } else if (formName === "add-edit-task") {
       const newTask = Task(
         e.target["task-name"].value,
