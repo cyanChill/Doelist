@@ -46,14 +46,10 @@ function createTaskCard(taskObj) {
               Priority: 
               <span class="unfocus-text">${priority}</span>
             </p>
-            ${
-              isCompleted
-                ? `<p>
-                  Category: 
-                  <span class="unfocus-text tc-category-field"></span>
-                </p>`
-                : ""
-            }
+            <p>
+              Category: 
+              <span class="unfocus-text tc-category-field"></span>
+            </p>
           </div>
           <div>
             <p>
@@ -63,9 +59,11 @@ function createTaskCard(taskObj) {
             ${
               isCompleted
                 ? `<p>
-                  Completed: 
-                  <span class="unfocus-text"> ${getNiceTime(completedDate)}</span>
-                </p>`
+                      Completed: 
+                      <span class="unfocus-text"> ${
+                        completedDate ? getNiceTime(completedDate) : "n/a"
+                      }</span>
+                    </p>`
                 : ""
             }
           </div>
@@ -107,12 +105,11 @@ function createTaskCard(taskObj) {
     taskCard.querySelector(".fa-edit").addEventListener("click", () => {
       Forms.displayUpdateForm(taskObj, taskCard);
     });
-  } else {
-    taskCard.querySelector(".tc-category-field").textContent = categoryLocation;
   }
 
   taskCard.querySelector(".task-title").textContent = taskName;
   taskCard.querySelector(".task-description").textContent = taskDescription;
+  taskCard.querySelector(".tc-category-field").textContent = categoryLocation;
 
   return taskCard;
 }
