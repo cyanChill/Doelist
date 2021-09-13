@@ -96,7 +96,7 @@ const CategoryDOM = (function () {
 
     categoryDiv.addEventListener("click", function (e) {
       // Prevents displaying category that was just deleted
-      if ([...e.target.classList].includes("category")) {
+      if (e.target.classList.contains("category")) {
         displayTaskCategory(this.dataset.category);
         setSelected(this);
         NavBar.closeNavOnMobile();

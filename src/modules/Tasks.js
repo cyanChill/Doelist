@@ -80,8 +80,8 @@ function createTaskCard(taskObj) {
   // Show Shelf Event
   taskCard.addEventListener("click", (e) => {
     const taskShelf = taskCard.querySelector(".task-shelf");
-    if ([...e.target.classList].includes("task-card")) {
-      if (![...taskShelf.classList].includes("show")) {
+    if (e.target.classList.contains("task-card")) {
+      if (!taskShelf.classList.contains("show")) {
         taskShelf.style.maxHeight = `${taskShelf.scrollHeight}px`;
       } else {
         taskShelf.style.maxHeight = 0;
