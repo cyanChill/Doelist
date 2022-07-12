@@ -1,3 +1,9 @@
+import "./styles/Nav.css";
+import "./styles/PageOverlay.css";
+import "./styles/style.css";
+import "./styles/TaskCard.css";
+import "./styles/TasksSection.css";
+
 import { CategoryDOM } from "./modules/Categories";
 import { TaskList } from "./modules/TasksList";
 

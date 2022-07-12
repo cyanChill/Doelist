@@ -1,8 +1,4 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
-@import url("./css/Nav.css");
-@import url("./css/PageOverlay.css");
-@import url("./css/TaskCard.css");
-@import url("./css/TasksSection.css");
 
 :root {
   --primary-clr-300: #dbc5ff;
