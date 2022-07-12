@@ -1,8 +1,8 @@
-# Todo List App
+# Doelist
 
-A web application to keep track of our todos.
+A web application to keep track of our todos (a pun of duelist but with to-"do list").
 
-Live Demonstration: https://cyanchill.github.io/JavaScript-Todo-List/
+Live Demonstration: https://doelist.netlify.app/
 
 ## Features
 

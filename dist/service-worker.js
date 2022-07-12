@@ -5219,7 +5219,7 @@ registerRoute(
 // );
 
 // Ignore Urchin Tracking Module & Facebook's analytics tracking links
-precacheAndRoute([{'revision':'ae822bc8f7d7d906f3bb208e0a3906c1','url':'favicon.ico'},{'revision':'ff67bb5c6a6f838c60f612a771526e30','url':'index.html'},{'revision':null,'url':'main.61b218c68a2ee1a7b717.css'},{'revision':null,'url':'main.61b218c68a2ee1a7b717.js'}], {
+precacheAndRoute([{'revision':'ae822bc8f7d7d906f3bb208e0a3906c1','url':'favicon.ico'},{'revision':'c550c20d1572b70517a67181ba9860d8','url':'index.html'},{'revision':null,'url':'main.ef5200633a4e6b34fd5c.css'},{'revision':null,'url':'main.ef5200633a4e6b34fd5c.js'}], {
   ignoreURLParametersMatching: [/^utm_/, /^fbclid$/],
 });
 
