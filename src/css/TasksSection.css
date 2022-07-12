@@ -1,0 +1,61 @@
+/* 
+  CSS styling for section displaying the tasks
+*/
+
+/* Container for the section displaying the tasks; will be used to limit the actual div used to hold the tasks */
+#task-container {
+  padding: 1rem;
+}
+
+/* Div to hold the tasks & any headers and such */
+#task-content {
+  position: relative;
+}
+
+/* Styling for the "title" of the section - to help the user know what category is being displayed */
+#task-category-header {
+  font-size: clamp(1.2rem, 7vw, 2rem);
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--grey-clr-400);
+}
+
+#task-category-header .category-label,
+#task-category-header .category-label span {
+  margin: 0;
+}
+
+/* Styling for the icon in the "title" */
+#task-category-header .category-label > i {
+  margin-right: clamp(0.5rem, 3vw, 1.5rem);
+}
+
+/* Container to hold the tasks items */
+#task-list {
+  margin: 0.25rem 0;
+  padding: 0.5rem 0.5rem 5rem 0.5rem;
+  overflow-y: auto;
+}
+
+/* Styling for the button to add tasks to the page */
+#add-task {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  font-size: 1.5rem;
+}
+
+/* Desktop styling */
+@media (min-width: 750px) {
+  #task-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+
+  #task-content {
+    width: clamp(30rem, 60vw, 70rem);
+  }
+}
