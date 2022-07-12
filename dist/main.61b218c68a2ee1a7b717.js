@@ -3461,7 +3461,7 @@ const CategoryDOM = (function () {
 
 
 ;// CONCATENATED MODULE: ./src/index.js
-
+ // Sets basic properties inherited by the rest
 
 
 

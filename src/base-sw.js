@@ -30,18 +30,18 @@ registerRoute(
                     Handling Page Assets
   -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 */
-const LOCAL_MEDIA_TYPES = [".png", ".css"];
-registerRoute(
-  ({ url }) =>
-    url.origin === self.location.origin &&
-    LOCAL_MEDIA_TYPES.some((ext) => url.pathname.endsWith(ext)),
-  new StaleWhileRevalidate({
-    cacheName: "local",
-    plugins: [
-      new ExpirationPlugin({ maxAgeSeconds: 60 * 60 * 24 * 30 }), // Refreshes cache once a month
-    ],
-  })
-);
+// const LOCAL_MEDIA_TYPES = [".png", ".css"];
+// registerRoute(
+//   ({ url }) =>
+//     url.origin === self.location.origin &&
+//     LOCAL_MEDIA_TYPES.some((ext) => url.pathname.endsWith(ext)),
+//   new StaleWhileRevalidate({
+//     cacheName: "local",
+//     plugins: [
+//       new ExpirationPlugin({ maxAgeSeconds: 60 * 60 * 24 * 30 }), // Refreshes cache once a month
+//     ],
+//   })
+// );
 
 // Ignore Urchin Tracking Module & Facebook's analytics tracking links
 precacheAndRoute(self.__WB_MANIFEST, {

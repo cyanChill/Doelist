@@ -1,6 +1,6 @@
+import "./styles/style.css"; // Sets basic properties inherited by the rest
 import "./styles/Nav.css";
 import "./styles/PageOverlay.css";
-import "./styles/style.css";
 import "./styles/TaskCard.css";
 import "./styles/TasksSection.css";
 
