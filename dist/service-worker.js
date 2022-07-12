@@ -5200,26 +5200,8 @@ registerRoute(
   })
 );
 
-/* 
-  -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-                    Handling Page Assets
-  -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-*/
-// const LOCAL_MEDIA_TYPES = [".png", ".css"];
-// registerRoute(
-//   ({ url }) =>
-//     url.origin === self.location.origin &&
-//     LOCAL_MEDIA_TYPES.some((ext) => url.pathname.endsWith(ext)),
-//   new StaleWhileRevalidate({
-//     cacheName: "local",
-//     plugins: [
-//       new ExpirationPlugin({ maxAgeSeconds: 60 * 60 * 24 * 30 }), // Refreshes cache once a month
-//     ],
-//   })
-// );
-
 // Ignore Urchin Tracking Module & Facebook's analytics tracking links
-precacheAndRoute([{'revision':'ae822bc8f7d7d906f3bb208e0a3906c1','url':'favicon.ico'},{'revision':'c550c20d1572b70517a67181ba9860d8','url':'index.html'},{'revision':null,'url':'main.ef5200633a4e6b34fd5c.css'},{'revision':null,'url':'main.ef5200633a4e6b34fd5c.js'}], {
+precacheAndRoute([{'revision':'ae822bc8f7d7d906f3bb208e0a3906c1','url':'favicon.ico'},{'revision':'0e1e133f7c224b3900662397e1383ff5','url':'index.html'},{'revision':null,'url':'main.7f0201dea17edff1d25e.css'},{'revision':null,'url':'main.7f0201dea17edff1d25e.js'}], {
   ignoreURLParametersMatching: [/^utm_/, /^fbclid$/],
 });
 
